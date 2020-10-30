@@ -1,6 +1,8 @@
 import csv
-import os
 import json
+import os
+import re
+
 import yaml
 
 
@@ -62,9 +64,41 @@ class DataReader:
         with open(self.data) as f:
             return yaml.full_load(f)
 
-    def read(self, delim=','):
+    def parse_sql(self, sql_create):
+        with open(self.data) as f:
+            data, head, body, count = [], [], [], 0
+            for statement in f:
+                data.append(re.findall("\((.*?)\)", statement))
+
+            # remove insert statement first
+            if sql_create:
+                data = [d for d in data if len(d) > 1]
+
+            # get header and body list to zip
+            for d in data:
+                head.append(d[0].split(','))
+                body.append(d[1].split(','))
+
+            # inefficient but will do this for now:
+            # remove whitespace
+            head = [[s.strip() for s in sub] for sub in head]
+            body = [[s.strip() for s in sub] for sub in body]
+            # remove single quotes
+            head = [[s.strip("'") for s in sub] for sub in head]
+            body = [[s.strip("'") for s in sub] for sub in body]
+            # replaced null with None
+            body = [[s.replace('null', '') for s in sub] for sub in body]
+
+            tmp = []
+            for k, v in zip(head, body):
+                tmp.append(dict(zip(k, v)))
+
+            return tmp
+
+    def read(self, delim=',', sql_create=False):
         """
         get data, assumes serialization process and returns data object
+        :param sql_create: str: specified if sql is being consumed that is basic insert on includes table creation
         :param delim: str: csv delimiter
         :return: data object
         """
@@ -75,6 +109,8 @@ class DataReader:
             return self.parse_json()
         elif data_type in ['yaml', 'yml']:
             return self.parse_yaml()
+        elif data_type in ['sql']:
+            return self.parse_sql(sql_create)
         else:
             raise ValueError('data provided has no extension specified \n'
-                             'supported types: csv, json')
+                             'supported types: csv, json, yaml, sql')

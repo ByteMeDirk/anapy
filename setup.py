@@ -15,7 +15,12 @@ setup(
     license="MIT",
     keywords="python, analytics",
     url="",
-    packages=['pandas', 'tests'],
+    install_requires=[
+        'pandas~=1.1.3',
+        'setuptools~=50.3.0',
+        'Cython~=0.29.21',
+        'pyyaml~=5.3.1'
+    ],
     long_description=read('README.md'),
     python_requires=">=3.6.1"
 )

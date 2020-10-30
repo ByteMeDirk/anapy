@@ -1,57 +1,45 @@
 import csv
-import os
 import json
+
 import yaml
 
 
-class DataWriter:
-    """
-    The DataReader class in intended for a more low-level pythonic method of reading data from
-    multiple serializations. In this case, all dependencies are based on the pre-provided modules
-    that come with python 3.7 >
-    """
-
-    def __init__(self, data, file, **kwargs):
-        """
-        :param file: data object
-        :param d_type: format to write data to
-        :param kwargs:
-        """
-        self.file = file
-        self.data = data
-
-    @staticmethod
-    def csv_quote(quoting):
-        try:
-            if quoting == 'all':
-                return csv.QUOTE_ALL
-            elif quoting == 'minimal':
-                return csv.QUOTE_MINIMAL
-            elif quoting == 'nonnumeric':
-                return csv.QUOTE_NONNUMERIC
-            else:
-                return csv.QUOTE_NONE
-        except ValueError:
-            raise ValueError('only quiting params specified are [all, minimal, nonumeric] otherwise none')
-
-
-    def write(self, format='csv', **kwargs):
-        if format == 'csv':
-            col_names = [i for i in self.data[0]]
-
-            with open(self.file, 'w') as f:
-                writer = csv.DictWriter(f, fieldnames=col_names,
-                                        delimiter=kwargs['delimiter'],
-                                        quoting=self.csv_quote(kwargs['quoting']))
-
-                if kwargs['header']:
-                    writer.writeheader()
-
-                for data in self.data:
-                    writer.writerow(data)
-        elif format == 'json':
-            pass
-        elif format == 'yaml':
-            pass
+def csv_quote(quoting):
+    try:
+        if quoting == 'all':
+            return csv.QUOTE_ALL
+        elif quoting == 'minimal':
+            return csv.QUOTE_MINIMAL
+        elif quoting == 'nonnumeric':
+            return csv.QUOTE_NONNUMERIC
         else:
-            raise ValueError('please specify a data format to write to')
+            return csv.QUOTE_NONE
+    except ValueError:
+        raise ValueError('only quiting params specified are [all, minimal, nonumeric] otherwise none')
+
+
+def strip_dict(d):
+    return {key: strip_dict(value) if isinstance(value, dict) else value.strip() for key, value in d.items()}
+
+
+def write_csv(delimiter=',', quoting=None, header=True, **kwargs):
+    col_names = [i for i in kwargs['data'][0]]
+    with open(kwargs['file'], 'w') as f:
+        writer = csv.DictWriter(f, fieldnames=col_names,
+                                delimiter=delimiter,
+                                quoting=csv_quote(quoting))
+        if header:
+            writer.writeheader()
+
+        for data in kwargs['data']:
+            # writer.writerow(strip_dict(data))
+            writer.writerow(data)
+
+def write_json(indent=None, allow_nan=True, sort_keys=True, **kwargs):
+    with open(kwargs['file'], 'w') as f:
+        json.dump(kwargs['data'], fp=f, indent=indent, allow_nan=allow_nan, sort_keys=sort_keys)
+
+
+def write_yaml(**kwargs):
+    with open(kwargs['file'], 'w') as f:
+        yaml.dump(kwargs['data'], f)
