@@ -2,6 +2,7 @@ import csv
 import json
 import os
 import re
+import gzip
 
 import yaml
 
@@ -21,6 +22,7 @@ class DataReader:
         """
         self.data = os.path.abspath(data)
         self.d_type = d_type
+        self.compression = None
 
     def get_extension(self):
         """
@@ -32,7 +34,11 @@ class DataReader:
             return self.d_type
         else:
             try:
-                return self.data.split('.')[-1]
+                # if gzipped make sure to return the right extension
+                if self.data.split('.')[-1] == 'gz':
+                    return self.data.split('.')[-2], 'gz'
+                else:
+                    return self.data.split('.')[-1], None
             except IndexError:
                 raise ValueError(f'population "file:{self.data}" provided has no specified extension')
 
@@ -42,8 +48,14 @@ class DataReader:
         :param delim: str: delimiter in csv file
         :return: dict object of data
         """
-        with open(self.data) as f:
-            return [{k: v for k, v in row.items()} for row in csv.DictReader(f, delimiter=delim, skipinitialspace=True)]
+        if self.compression == 'gz':
+            with gzip.open(self.data, 'rt') as gf:
+                return [row for row in csv.DictReader(gf, delimiter=delim, skipinitialspace=True)]
+
+        else:
+            with open(self.data) as f:
+                return [{k: v for k, v in row.items()} for row in
+                        csv.DictReader(f, delimiter=delim, skipinitialspace=True)]
 
     def parse_json(self):
         """
@@ -51,8 +63,13 @@ class DataReader:
         :return: dict object of data
         """
         try:
-            with open(self.data, 'rb') as f:
-                return json.load(f)
+            if self.compression == 'gz':
+                with gzip.open(self.data, 'rt') as gf:
+                    return json.load(gf)
+            else:
+                with open(self.data, 'rb') as f:
+                    return json.load(f)
+
         except json.decoder.JSONDecodeError:
             raise ValueError(f'data provided is not of type {self.d_type}')
 
@@ -61,39 +78,49 @@ class DataReader:
         consumes yaml data file and returns dict
         :return: dict object of data
         """
-        with open(self.data) as f:
-            return yaml.full_load(f)
+        if self.compression == 'gz':
+            with gzip.open(self.data, 'rt') as gf:
+                return yaml.full_load(gf)
+        else:
+            with open(self.data) as f:
+                return yaml.full_load(f)
 
     def parse_sql(self, sql_create):
-        with open(self.data) as f:
-            data, head, body, count = [], [], [], 0
-            for statement in f:
-                data.append(re.findall("\((.*?)\)", statement))
+        if self.compression == 'gz':
+            with gzip.open(self.data, 'rt') as gf:
+                data, head, body, count = [], [], [], 0
+                for statement in gf:
+                    data.append(re.findall("\((.*?)\)", statement))
+        else:
+            with open(self.data) as f:
+                data, head, body, count = [], [], [], 0
+                for statement in f:
+                    data.append(re.findall("\((.*?)\)", statement))
 
-            # remove insert statement first
-            if sql_create:
-                data = [d for d in data if len(d) > 1]
+        # remove insert statement first
+        if sql_create:
+            data = [d for d in data if len(d) > 1]
 
-            # get header and body list to zip
-            for d in data:
-                head.append(d[0].split(','))
-                body.append(d[1].split(','))
+        # get header and body list to zip
+        for d in data:
+            head.append(d[0].split(','))
+            body.append(d[1].split(','))
 
-            # inefficient but will do this for now:
-            # remove whitespace
-            head = [[s.strip() for s in sub] for sub in head]
-            body = [[s.strip() for s in sub] for sub in body]
-            # remove single quotes
-            head = [[s.strip("'") for s in sub] for sub in head]
-            body = [[s.strip("'") for s in sub] for sub in body]
-            # replaced null with None
-            body = [[s.replace('null', '') for s in sub] for sub in body]
+        # inefficient but will do this for now:
+        # remove whitespace
+        head = [[s.strip() for s in sub] for sub in head]
+        body = [[s.strip() for s in sub] for sub in body]
+        # remove single quotes
+        head = [[s.strip("'") for s in sub] for sub in head]
+        body = [[s.strip("'") for s in sub] for sub in body]
+        # replaced null with None
+        body = [[s.replace('null', '') for s in sub] for sub in body]
 
-            tmp = []
-            for k, v in zip(head, body):
-                tmp.append(dict(zip(k, v)))
+        tmp = []
+        for k, v in zip(head, body):
+            tmp.append(dict(zip(k, v)))
 
-            return tmp
+        return tmp
 
     def read(self, delim=',', sql_create=False):
         """
@@ -102,7 +129,7 @@ class DataReader:
         :param delim: str: csv delimiter
         :return: data object
         """
-        data_type = self.get_extension()
+        data_type, self.compression = self.get_extension()
         if data_type == 'csv':
             return self.parse_csv(delim)
         elif data_type == 'json':
