@@ -29,7 +29,7 @@ if version.endswith(("a", "b", "rc")):
 classifiers = [
     "Development Status :: 1 - Planning",
     "Intended Audience :: Developers",
-    "License :: OSI Approved :: Apache Software License",
+    "LICENSE :: OSI APPROVED :: GNU GENERAL PUBLIC LICENSE V3 (GPLV3)",
     "Natural Language :: English",
     "Operating System :: OS Independent",
     "Programming Language :: Python",
