@@ -16,8 +16,6 @@ setup(
     keywords="python, analytics",
     url="https://github.com/DirksCGM/anapy",
     install_requires=[
-        'pandas~=1.1.3',
-        'setuptools~=50.3.0',
         'Cython~=0.29.21',
         'pyyaml~=5.3.1'
     ],
