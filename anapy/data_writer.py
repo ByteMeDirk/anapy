@@ -35,6 +35,7 @@ def write_csv(delimiter=',', quoting=None, header=True, **kwargs):
             # writer.writerow(strip_dict(data))
             writer.writerow(data)
 
+
 def write_json(indent=None, allow_nan=True, sort_keys=True, **kwargs):
     with open(kwargs['file'], 'w') as f:
         json.dump(kwargs['data'], fp=f, indent=indent, allow_nan=allow_nan, sort_keys=sort_keys)

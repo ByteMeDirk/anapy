@@ -1,8 +1,8 @@
 import csv
+import gzip
 import json
 import os
 import re
-import gzip
 
 import yaml
 
