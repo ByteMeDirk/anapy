@@ -14,7 +14,7 @@ setup(
     description="an analytical toolset for working on datasets of various formats",
     license="MIT",
     keywords="python, analytics",
-    url="",
+    url="https://github.com/DirksCGM/anapy",
     install_requires=[
         'pandas~=1.1.3',
         'setuptools~=50.3.0',
