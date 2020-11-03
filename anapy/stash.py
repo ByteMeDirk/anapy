@@ -54,9 +54,7 @@ class StashTable:
             pass
 
     def __bin_read(self, key):
-        """
-        reads from binary ANApy file structure
-        """
+        """ reads from binary ANApy file structure """
         try:
             with gzip.open(f'{self.cwd}/{self.table}/{key}', 'r') as f:
                 dat = ast.literal_eval(base64.decodebytes(f.read()).decode())
@@ -65,18 +63,13 @@ class StashTable:
             raise ValueError(f'the column: "{key}" does not exist or has not been stashed')
 
     def __bin_write(self, key, values):
-        """
-        writes to binary in ANApy file structure
-        """
+        """ writes to binary in ANApy file structure """
         with gzip.open(f'{self.cwd}/{self.table}/{key}', 'wb') as f:
             dat = base64.encodebytes(str(values).encode())
             f.write(dat)
 
     def save(self):
-        """
-        stash data table to ANApy columnar file structure
-        :return: None
-        """
+        """  stash data table to ANApy columnar file structure """
         values = []
         for k in self.keys:
             for i in range(len(self.data)):
@@ -108,16 +101,15 @@ class StashTable:
         return __row
 
     def col_names(self):
-        """
-        returns column naves or keys of table
-        """
+        """ returns column naves or keys of table """
         return self.keys
 
     def get(self, key, value, operator) -> list:
         # ToDo: not very efficient, work on something a little faster
         """
         return all rows where a key.value matches a specific value
-        note that the logical operator is not sensitive to data type and will return anything that is true
+        note that the logical operator is not sensitive to data type and will
+        return anything that is true
         :param key: str: column name
         :param value: str: value where key.value matches based on operator
         :param operator: str: logical operator [>, <, >=, <=, !=, ==]
@@ -152,16 +144,10 @@ class StashTable:
         return tmp
 
     def delete(self):
-        """
-        delete the table once all work has been completed
-        :return:
-        """
+        """ delete the table once all work has been completed """
         shutil.rmtree(f'stash/{self.table}')
 
     @staticmethod
     def un_stash():
-        """
-        delete the ANApy stash system
-        :return:
-        """
+        """ delete the ANApy stash system """
         shutil.rmtree('stash')
