@@ -1,8 +1,8 @@
-import unittest
-import anapy.data_reader as dr
-import anapy.data_writer as dw
-import anapy.stash as st
 import os
+import unittest
+
+import anapy.data_reader as dr
+import anapy.stash as st
 
 cwd = os.getcwd()
 

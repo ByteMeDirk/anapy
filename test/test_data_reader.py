@@ -1,6 +1,7 @@
-import unittest
-from anapy.data_reader import DataReader
 import os
+import unittest
+
+from anapy.data_reader import DataReader
 
 cwd = os.getcwd()
 

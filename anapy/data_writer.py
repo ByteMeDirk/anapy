@@ -1,7 +1,5 @@
 import csv
 import json
-import pyarrow.parquet as pq
-import pyarrow
 
 import yaml
 
