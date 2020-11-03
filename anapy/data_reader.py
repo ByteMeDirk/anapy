@@ -9,8 +9,10 @@ import yaml
 
 class DataReader:
     """
-    The DataReader class in intended for a more low-level pythonic method of reading data from
-    multiple serializations. In this case, all dependencies are based on the pre-provided modules
+    The DataReader class in intended for a more
+    low-level pythonic method of reading data from
+    multiple serializations. In this case, all
+    dependencies are based on the pre-provided modules
     that come with python 3.7 >
     """
 
@@ -26,8 +28,11 @@ class DataReader:
 
     def get_extension(self):
         """
-        simple process of getting extension from data absolute path string
-        if extension is not provided, d_type expects a string 'csv', 'json' etc else exception is raised
+        simple process of getting extension
+        from data absolute path string
+        if extension is not provided, d_type
+        expects a string 'csv', 'json' etc else
+        exception is raised
         :return: str: data extension name
         """
 
@@ -38,8 +43,8 @@ class DataReader:
                 # if gzipped make sure to return the right extension
                 if self.data.split('.')[-1] == 'gz':
                     return self.data.split('.')[-2], 'gz'
-                else:
-                    return self.data.split('.')[-1], None
+
+                return self.data.split('.')[-1], None
             except IndexError:
                 raise ValueError(f'population "file:{self.data}" provided has no specified extension')
 
@@ -51,12 +56,15 @@ class DataReader:
         """
         if self.compression == 'gz':
             with gzip.open(self.data, 'rt') as gf:
-                return [row for row in csv.DictReader(gf, delimiter=delim, skipinitialspace=True)]
+                return list(row for row in csv.DictReader(gf,
+                                                          delimiter=delim,
+                                                          skipinitialspace=True))
 
-        else:
-            with open(self.data) as f:
-                return [{k: v for k, v in row.items()} for row in
-                        csv.DictReader(f, delimiter=delim, skipinitialspace=True)]
+        with open(self.data) as f:
+            return list({k: v for k, v in row.items()} for row in
+                        csv.DictReader(f,
+                                       delimiter=delim,
+                                       skipinitialspace=True))
 
     def parse_json(self):
         """
@@ -67,9 +75,9 @@ class DataReader:
             if self.compression == 'gz':
                 with gzip.open(self.data, 'rt') as gf:
                     return json.load(gf)
-            else:
-                with open(self.data, 'rb') as f:
-                    return json.load(f)
+
+            with open(self.data, 'rb') as f:
+                return json.load(f)
 
         except json.decoder.JSONDecodeError:
             raise ValueError(f'data provided is not of type {self.format}')
@@ -82,9 +90,9 @@ class DataReader:
         if self.compression == 'gz':
             with gzip.open(self.data, 'rt') as gf:
                 return yaml.full_load(gf)
-        else:
-            with open(self.data) as f:
-                return yaml.full_load(f)
+
+        with open(self.data) as f:
+            return yaml.full_load(f)
 
     def parse_sql(self, sql_create):
         """
@@ -96,12 +104,12 @@ class DataReader:
             with gzip.open(self.data, 'rt') as gf:
                 data, head, body, count = [], [], [], 0
                 for statement in gf:
-                    data.append(re.findall("\((.*?)\)", statement))
+                    data.append(re.findall(r'\((.*?)\)', statement))
         else:
             with open(self.data) as f:
                 data, head, body, count = [], [], [], 0
                 for statement in f:
-                    data.append(re.findall("\((.*?)\)", statement))
+                    data.append(re.findall(r'\((.*?)\)', statement))
 
         # remove insert statement first
         if sql_create:
@@ -130,8 +138,11 @@ class DataReader:
 
     def read(self, delim=',', sql_create=False):
         """
-        get data, assumes serialization process and returns data object
-        :param sql_create: str: specified if sql is being consumed that is basic insert on includes table creation
+        get data, assumes serialization process
+        and returns data object
+        :param sql_create: str: specified if sql
+        is being consumed that is basic insert
+        on includes table creation
         :param delim: str: csv delimiter
         :return: data object
         """
@@ -142,12 +153,15 @@ class DataReader:
 
         if data_type == 'csv':
             return self.parse_csv(delim)
-        elif data_type == 'json':
+
+        if data_type == 'json':
             return self.parse_json()
-        elif data_type in ['yaml', 'yml']:
+
+        if data_type in ['yaml', 'yml']:
             return self.parse_yaml()
-        elif data_type in ['sql']:
+
+        if data_type in ['sql']:
             return self.parse_sql(sql_create)
-        else:
-            raise ValueError('data provided has no extension specified \n'
-                             'supported types: csv, json, yaml, sql')
+
+        raise ValueError('data provided has no extension specified \n'
+                         'supported types: csv, json, yaml, sql')
