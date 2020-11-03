@@ -19,7 +19,7 @@ class DataReader:
     def __init__(self, data, format=None, **kwargs):
         """
         :param data: path to data
-        :param format: extension of data
+        :param format: extension of data NOTE: gzipped files should not have their inherent format suggested
         :param kwargs:
         """
         self.data = os.path.abspath(data)
@@ -36,17 +36,17 @@ class DataReader:
         :return: str: data extension name
         """
 
-        if self.format:
-            return self.format
-        else:
-            try:
-                # if gzipped make sure to return the right extension
-                if self.data.split('.')[-1] == 'gz':
-                    return self.data.split('.')[-2], 'gz'
+        if self.format and 'gz' not in self.format:
+            return self.format, None
 
-                return self.data.split('.')[-1], None
-            except IndexError:
-                raise ValueError(f'population "file:{self.data}" provided has no specified extension')
+        try:
+            # if gzipped make sure to return the right extension
+            if self.data.split('.')[-1] == 'gz':
+                return self.data.split('.')[-2], 'gz'
+
+            return self.data.split('.')[-1], None
+        except IndexError:
+            raise ValueError(f'population "file:{self.data}" provided has no specified extension')
 
     def parse_csv(self, delim):
         """
@@ -80,7 +80,7 @@ class DataReader:
                 return json.load(f)
 
         except json.decoder.JSONDecodeError:
-            raise ValueError(f'data provided is not of type {self.format}')
+            raise ValueError(f'data provided is not of type {self.format} or json is not valid')
 
     def parse_yaml(self):
         """
@@ -146,10 +146,8 @@ class DataReader:
         :param delim: str: csv delimiter
         :return: data object
         """
-        try:
-            data_type, self.compression = self.get_extension()
-        except ValueError:
-            data_type = self.get_extension()
+
+        data_type, self.compression = self.get_extension()
 
         if data_type == 'csv':
             return self.parse_csv(delim)

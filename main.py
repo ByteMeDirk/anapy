@@ -4,9 +4,9 @@ from anapy.stash import StashTable
 
 
 def main():
-    data = dr.DataReader(data='tests/data/basic_csv.csv', format='csv').read(sql_create=False)
+    data = dr.DataReader(data='test/data/json_array.json.gz', format='json.gz').read()
 
-    table = StashTable(data=data, table='basic_csv')
+    table = StashTable(data=data, table='basic')
     table.save()
 
     col_names = table.col_names()
