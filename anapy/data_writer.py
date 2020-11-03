@@ -1,5 +1,7 @@
 import csv
 import json
+import pyarrow.parquet as pq
+import pyarrow
 
 import yaml
 
@@ -26,7 +28,7 @@ def csv_quote(quoting):
 def strip_dict(d):
     """ cleans up dictionary obtained from a messy file """
     return {key: strip_dict(value) if isinstance(value, dict)
-            else value.strip() for key, value in d.items()}
+    else value.strip() for key, value in d.items()}
 
 
 def write_csv(delimiter=',', quoting=None, header=True, **kwargs):

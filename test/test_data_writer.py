@@ -15,7 +15,7 @@ class TestDataWriter(unittest.TestCase):
                              data=cwd + '/test/data/basic_csv.csv')\
             .read(delim=',')
         dw.write_csv(data=data, file='tmp.csv', delimiter=',')
-        self.assertTrue(os.path.isfile('tmp.csv'))
+        self.assertIs(os.path.isfile('tmp.csv'), True)
         os.remove('tmp.csv')
 
     def test_write_csv_delim_2(self):
@@ -24,7 +24,7 @@ class TestDataWriter(unittest.TestCase):
                              data=cwd + '/test/data/basic_csv.csv')\
             .read(delim=',')
         dw.write_csv(data=data, file='tmp.csv', delimiter=';')
-        self.assertTrue(os.path.isfile('tmp.csv'))
+        self.assertIs(os.path.isfile('tmp.csv'), True)
         os.remove('tmp.csv')
 
     # json
@@ -34,7 +34,7 @@ class TestDataWriter(unittest.TestCase):
                              data=cwd + '/test/data/basic_csv.csv')\
             .read(delim=',')
         dw.write_json(data=data, file='tmp.json', allow_nan=True)
-        self.assertTrue(os.path.isfile('tmp.json'))
+        self.assertIs(os.path.isfile('tmp.json'), True)
         os.remove('tmp.json')
 
     def test_write_json_not_allow_nan(self):
@@ -43,7 +43,7 @@ class TestDataWriter(unittest.TestCase):
                              data=cwd + '/test/data/basic_csv.csv')\
             .read(delim=',')
         dw.write_json(data=data, file='tmp.json', allow_nan=False)
-        self.assertTrue(os.path.isfile('tmp.json'))
+        self.assertIs(os.path.isfile('tmp.json'), True)
         os.remove('tmp.json')
 
     def test_write_json_indent(self):
@@ -52,7 +52,7 @@ class TestDataWriter(unittest.TestCase):
                              data=cwd + '/test/data/basic_csv.csv')\
             .read(delim=',')
         dw.write_json(data=data, file='tmp.json', allow_nan=True, indent=4)
-        self.assertTrue(os.path.isfile('tmp.json'))
+        self.assertIs(os.path.isfile('tmp.json'), True)
         os.remove('tmp.json')
 
     # yaml
@@ -62,5 +62,5 @@ class TestDataWriter(unittest.TestCase):
                              data=cwd + '/test/data/basic_csv.csv')\
             .read(delim=',')
         dw.write_yaml(data=data, file='tmp.yaml')
-        self.assertTrue(os.path.isfile('tmp.yaml'))
+        self.assertIs(os.path.isfile('tmp.yaml'), True)
         os.remove('tmp.yaml')
