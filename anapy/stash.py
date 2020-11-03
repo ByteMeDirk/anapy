@@ -6,7 +6,21 @@ import shutil
 
 
 def list_tables():
+    """list current tables in stash"""
     return os.listdir('stash/')
+
+
+def delete_tables(table):
+    """
+    delete the table within the stash directory
+    :param table: table to delete
+    """
+    try:
+        shutil.rmtree(f'stash/{table}')
+    except FileNotFoundError:
+        raise FileNotFoundError(f'{table} is not a stashed table, '
+                                'stashed tables are: \n'
+                                f'{list_tables()}')
 
 
 class StashTable:
@@ -151,4 +165,5 @@ class StashTable:
     @staticmethod
     def un_stash():
         """ delete the ANApy stash system """
+        os.rmdir('stash')
         shutil.rmtree('stash')

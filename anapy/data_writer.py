@@ -5,6 +5,7 @@ import yaml
 
 
 def csv_quote(quoting):
+    """define quoting params for csv writing"""
     try:
         if quoting == 'all':
             return csv.QUOTE_ALL

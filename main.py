@@ -1,6 +1,7 @@
 import anapy.data_reader as dr
 import anapy.data_writer as dw
 from anapy.stash import StashTable
+import anapy.stash as st
 
 
 def main():
@@ -16,7 +17,7 @@ def main():
     females = table.get(key='gender', value='Female', operator='==')
     dw.write_csv(data=females, file='female_subset.csv')
 
-    table.un_stash()
+    st.delete_tables('basic')
 
 
 if __name__ == '__main__':
