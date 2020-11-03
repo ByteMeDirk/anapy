@@ -58,15 +58,15 @@ class DataReader:
         """
         if self.compression == 'gz':
             with gzip.open(self.data, 'rt') as gf:
-                return list(row for row in csv.DictReader(gf,
-                                                          delimiter=delim,
-                                                          skipinitialspace=True))
+                return [row for row in csv.DictReader(gf,
+                                                      delimiter=delim,
+                                                      skipinitialspace=True)]
 
         with open(self.data) as f:
-            return list({k: v for k, v in row.items()} for row in
-                        csv.DictReader(f,
-                                       delimiter=delim,
-                                       skipinitialspace=True))
+            return [{k: v for k, v in row.items()} for row in
+                    csv.DictReader(f,
+                                   delimiter=delim,
+                                   skipinitialspace=True)]
 
     def parse_json(self):
         """
