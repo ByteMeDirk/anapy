@@ -1,16 +1,22 @@
+import anapy.data_reader as dr
 import anapy.data_writer as dw
-from anapy import data_reader as dr
+from anapy.stash import StashTable
 
 
 def main():
-    csv_dat = dr.DataReader(data='tests/data/sql_insert.sql').read()
-    print(csv_dat[0])
+    data = dr.DataReader(data='tests/data/basic_csv.csv', format='csv').read(sql_create=False)
 
-    data = dr.DataReader(data='data.sql', d_type='sql').read(sql_create=False)
+    table = StashTable(data=data, table='basic_csv')
+    table.save()
 
-    dw.write_csv(file='data.csv', data=data, quoting='minimal', header=True)
-    dw.write_yaml(file='data.yaml', data=data)
-    dw.write_json(file='data.json', data=data, allow_nan=True, sort_keys=False)
+    col_names = table.col_names()
+    first_row = table.row(index=0)
+    first_col = table.col(key='email')
+
+    females = table.get(key='gender', value='Female', operator='==')
+    dw.write_csv(data=females, file='female_subset.csv')
+
+    table.un_stash()
 
 
 if __name__ == '__main__':

@@ -43,9 +43,9 @@ class TestDataReader(unittest.TestCase):
 
     # text
     def test_text_reader_type(self):
-        tmp = DataReader(data=data_paths['txt'], d_type='csv').read()
+        tmp = DataReader(data=data_paths['txt'], format='csv').read()
         self.assertTrue(type(tmp) == list)
 
     def test_text_reader_len(self):
-        tmp = DataReader(data=data_paths['txt'], d_type='csv').read()
+        tmp = DataReader(data=data_paths['txt'], format='csv').read()
         self.assertTrue(len(tmp) == 1000)

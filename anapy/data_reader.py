@@ -14,14 +14,14 @@ class DataReader:
     that come with python 3.7 >
     """
 
-    def __init__(self, data, d_type=None, **kwargs):
+    def __init__(self, data, format=None, **kwargs):
         """
         :param data: path to data
-        :param d_type: extension of data
+        :param format: extension of data
         :param kwargs:
         """
         self.data = os.path.abspath(data)
-        self.d_type = d_type
+        self.format = format
         self.compression = None
 
     def get_extension(self):
@@ -30,8 +30,9 @@ class DataReader:
         if extension is not provided, d_type expects a string 'csv', 'json' etc else exception is raised
         :return: str: data extension name
         """
-        if self.d_type:
-            return self.d_type
+
+        if self.format:
+            return self.format
         else:
             try:
                 # if gzipped make sure to return the right extension
@@ -71,7 +72,7 @@ class DataReader:
                     return json.load(f)
 
         except json.decoder.JSONDecodeError:
-            raise ValueError(f'data provided is not of type {self.d_type}')
+            raise ValueError(f'data provided is not of type {self.format}')
 
     def parse_yaml(self):
         """
@@ -86,6 +87,11 @@ class DataReader:
                 return yaml.full_load(f)
 
     def parse_sql(self, sql_create):
+        """
+        consumes sql insert file and returns dict
+        :param sql_create: bool: set if sql file has table create method
+        :return: dict object of data
+        """
         if self.compression == 'gz':
             with gzip.open(self.data, 'rt') as gf:
                 data, head, body, count = [], [], [], 0
@@ -129,7 +135,11 @@ class DataReader:
         :param delim: str: csv delimiter
         :return: data object
         """
-        data_type, self.compression = self.get_extension()
+        try:
+            data_type, self.compression = self.get_extension()
+        except ValueError:
+            data_type = self.get_extension()
+
         if data_type == 'csv':
             return self.parse_csv(delim)
         elif data_type == 'json':
