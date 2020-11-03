@@ -8,6 +8,11 @@ anapy is the beginning of a simplified universal data manipulation library for h
 .. image:: https://img.shields.io/github/license/dirkscgm/anapy?style=for-the-badge
 .. image:: https://img.shields.io/github/languages/top/dirkscgm/anapy?style=for-the-badge
 
+----------------------
+
+.. image:: https://deepsource.io/gh/DirksCGM/anapy.svg/?label=active+issues&show_trend=true    :target: https://deepsource.io/gh/DirksCGM/anapy/?ref=repository-badge
+.. image:: https://deepsource.io/gh/DirksCGM/anapy.svg/?label=resolved+issues&show_trend=true    :target: https://deepsource.io/gh/DirksCGM/anapy/?ref=repository-badge
+
 What is Anapy?
 **********************
 
