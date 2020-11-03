@@ -11,9 +11,12 @@ def list_tables():
 
 class StashTable:
     """
-    StashTable is a simplistic data storage solution for quickly reading and writing datasets in a
-    compressed columnar storage system. The solution runs locally within your application.
-    The benefit of the columnar storage method is rapid search capabilities on relatively large data
+    StashTable is a simplistic data storage solution for
+    quickly reading and writing datasets in a compressed
+    columnar storage system. The solution runs locally
+    within your application.
+    The benefit of the columnar storage method is rapid
+    search capabilities on relatively large data
     being piped in and out of the application.
 
 
@@ -41,7 +44,7 @@ class StashTable:
     def __init__(self, **kwargs):
         self.data = kwargs['data']
         self.table = kwargs['table']
-        self.keys = [k for k in self.data[0].keys()]
+        self.keys = list(k for k in self.data[0].keys())
 
         self.cwd = os.getcwd() + '/stash/'
 

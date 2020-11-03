@@ -8,12 +8,15 @@ def csv_quote(quoting):
     try:
         if quoting == 'all':
             return csv.QUOTE_ALL
-        elif quoting == 'minimal':
+
+        if quoting == 'minimal':
             return csv.QUOTE_MINIMAL
-        elif quoting == 'nonnumeric':
+
+        if quoting == 'nonnumeric':
             return csv.QUOTE_NONNUMERIC
-        else:
-            return csv.QUOTE_NONE
+
+        return csv.QUOTE_NONE
+
     except ValueError:
         raise ValueError('only quiting params specified are [all, minimal, nonumeric] otherwise none')
 
@@ -34,7 +37,7 @@ def write_csv(delimiter=',', quoting=None, header=True, **kwargs):
     :param file: file to write csv to
     :param data: data to consume
     """
-    col_names = [i for i in kwargs['data'][0]]
+    col_names = list(i for i in kwargs['data'][0])
     with open(kwargs['file'], 'w') as f:
         writer = csv.DictWriter(f, fieldnames=col_names,
                                 delimiter=delimiter,
