@@ -19,7 +19,8 @@ class DataReader:
     def __init__(self, data, format=None, **kwargs):
         """
         :param data: path to data
-        :param format: extension of data NOTE: gzipped files should not have their inherent format suggested
+        :param format: extension of data NOTE: gzipped
+        files should not have their inherent format suggested
         :param kwargs:
         """
         self.data = os.path.abspath(data)
@@ -46,7 +47,8 @@ class DataReader:
 
             return self.data.split('.')[-1], None
         except IndexError:
-            raise ValueError(f'population "file:{self.data}" provided has no specified extension')
+            raise ValueError(f'population "file:{self.data}" '
+                             'provided has no specified extension')
 
     def parse_csv(self, delim):
         """
@@ -80,7 +82,8 @@ class DataReader:
                 return json.load(f)
 
         except json.decoder.JSONDecodeError:
-            raise ValueError(f'data provided is not of type {self.format} or json is not valid')
+            raise ValueError(f'data provided is not of type '
+                             f'{self.format} or json is not valid')
 
     def parse_yaml(self):
         """

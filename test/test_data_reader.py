@@ -23,7 +23,8 @@ class TestDataReader(unittest.TestCase):
     # csv
     def test_csv_reader_type_format_true(self):
         """csv read with format specified"""
-        tmp = DataReader(data=data_paths['csv'], format='csv').read(delim=',')
+        tmp = DataReader(data=data_paths['csv'],
+                         format='csv').read(delim=',')
         self.assertTrue(type(tmp) == list)
 
     def test_csv_reader_type_format_false(self):
@@ -34,7 +35,8 @@ class TestDataReader(unittest.TestCase):
     # json
     def test_json_reader_type_format_true(self):
         """json read with format specified"""
-        tmp = DataReader(data=data_paths['json_arr'], format='json').read()
+        tmp = DataReader(data=data_paths['json_arr'],
+                         format='json').read()
         self.assertTrue(type(tmp) == list)
 
     def test_json_reader_type_format_false(self):
@@ -45,7 +47,8 @@ class TestDataReader(unittest.TestCase):
     # yaml
     def test_yaml_reader_type_format_true(self):
         """yaml read with format specified"""
-        tmp = DataReader(data=data_paths['yaml'], format='yaml').read()
+        tmp = DataReader(data=data_paths['yaml'],
+                         format='yaml').read()
         self.assertTrue(type(tmp) == list)
 
     def test_yaml_reader_type_format_false(self):
@@ -56,66 +59,84 @@ class TestDataReader(unittest.TestCase):
     # sql insert
     def test_sql_insert_reader_type_format_true(self):
         """sql read with format specified"""
-        tmp = DataReader(data=data_paths['sql'], format='sql').read(sql_create=False)
+        tmp = DataReader(data=data_paths['sql'],
+                         format='sql') \
+            .read(sql_create=False)
         self.assertTrue(type(tmp) == list)
 
     def test_sql_insert_reader_type_format_false(self):
         """sql read with format unspecified"""
-        tmp = DataReader(data=data_paths['sql']).read(sql_create=False)
+        tmp = DataReader(data=data_paths['sql']) \
+            .read(sql_create=False)
         self.assertTrue(type(tmp) == list)
 
     # sql create
     def test_sql_create_reader_type_format_true(self):
         """sql read with format specified"""
-        tmp = DataReader(data=data_paths['sql_cr'], format='sql').read(sql_create=True)
+        tmp = DataReader(data=data_paths['sql_cr'],
+                         format='sql') \
+            .read(sql_create=True)
         self.assertTrue(type(tmp) == list)
 
     def test_sql_create_reader_type_format_false(self):
         """sql read with format unspecified"""
-        tmp = DataReader(data=data_paths['sql_cr']).read(sql_create=True)
+        tmp = DataReader(data=data_paths['sql_cr']) \
+            .read(sql_create=True)
         self.assertTrue(type(tmp) == list)
 
     # Compressed Data Read
     # csv
     def test_comp_csv_reader_type_format_true(self):
         """csv read with format specified"""
-        tmp = DataReader(data=data_paths['csv_gz'], format='csv.gz').read(delim=',')
+        tmp = DataReader(data=data_paths['csv_gz'],
+                         format='csv.gz') \
+            .read(delim=',')
         self.assertTrue(type(tmp) == list)
 
     def test_comp_csv_reader_type_format_false(self):
         """csv read with format unspecified"""
-        tmp = DataReader(data=data_paths['csv_gz']).read(delim=',')
+        tmp = DataReader(data=data_paths['csv_gz']) \
+            .read(delim=',')
         self.assertTrue(type(tmp) == list)
 
     # json
     def test_comp_json_reader_type_format_true(self):
         """json read with format specified"""
-        tmp = DataReader(data=data_paths['json_gz'], format='json.gz').read()
+        tmp = DataReader(data=data_paths['json_gz'],
+                         format='json.gz') \
+            .read()
         self.assertTrue(type(tmp) == list)
 
     def test_comp_json_reader_type_format_false(self):
         """json read with format unspecified"""
-        tmp = DataReader(data=data_paths['json_gz']).read()
+        tmp = DataReader(data=data_paths['json_gz']) \
+            .read()
         self.assertTrue(type(tmp) == list)
 
     # yaml
     def test_comp_yaml_reader_type_format_true(self):
         """yaml read with format specified"""
-        tmp = DataReader(data=data_paths['yaml_gz'], format='yaml.gz').read()
+        tmp = DataReader(data=data_paths['yaml_gz'],
+                         format='yaml.gz') \
+            .read()
         self.assertTrue(type(tmp) == list)
 
     def test_comp_yaml_reader_type_format_false(self):
         """yaml read with format unspecified"""
-        tmp = DataReader(data=data_paths['yaml_gz']).read()
+        tmp = DataReader(data=data_paths['yaml_gz']) \
+            .read()
         self.assertTrue(type(tmp) == list)
 
     # sql
     def test_comp_sql_insert_reader_type_format_true(self):
         """sql read with format specified"""
-        tmp = DataReader(data=data_paths['sql_gz'], format='sql.gz').read(sql_create=False)
+        tmp = DataReader(data=data_paths['sql_gz'],
+                         format='sql.gz') \
+            .read(sql_create=False)
         self.assertTrue(type(tmp) == list)
 
     def test_comp_sql_insert_reader_type_format_false(self):
         """sql read with format unspecified"""
-        tmp = DataReader(data=data_paths['sql_gz']).read(sql_create=False)
+        tmp = DataReader(data=data_paths['sql_gz']) \
+            .read(sql_create=False)
         self.assertTrue(type(tmp) == list)

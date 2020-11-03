@@ -18,12 +18,14 @@ def csv_quote(quoting):
         return csv.QUOTE_NONE
 
     except ValueError:
-        raise ValueError('only quiting params specified are [all, minimal, nonumeric] otherwise none')
+        raise ValueError('only quiting params specified are '
+                         '[all, minimal, nonumeric] otherwise none')
 
 
 def strip_dict(d):
     """ cleans up dictionary obtained from a messy file """
-    return {key: strip_dict(value) if isinstance(value, dict) else value.strip() for key, value in d.items()}
+    return {key: strip_dict(value) if isinstance(value, dict)
+    else value.strip() for key, value in d.items()}
 
 
 def write_csv(delimiter=',', quoting=None, header=True, **kwargs):
@@ -58,7 +60,11 @@ def write_json(indent=None, allow_nan=True, sort_keys=True, **kwargs):
     :param data: data to consume
     """
     with open(kwargs['file'], 'w') as f:
-        json.dump(kwargs['data'], fp=f, indent=indent, allow_nan=allow_nan, sort_keys=sort_keys)
+        json.dump(kwargs['data'],
+                  fp=f,
+                  indent=indent,
+                  allow_nan=allow_nan,
+                  sort_keys=sort_keys)
 
 
 def write_yaml(**kwargs):

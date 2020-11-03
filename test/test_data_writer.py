@@ -11,14 +11,18 @@ class TestDataWriter(unittest.TestCase):
     # csv
     def test_write_csv_delim_1(self):
         """write to csv with delim ,"""
-        data = dr.DataReader(format='csv', data=cwd + '/test/data/basic_csv.csv').read(delim=',')
+        data = dr.DataReader(format='csv',
+                             data=cwd + '/test/data/basic_csv.csv')\
+            .read(delim=',')
         dw.write_csv(data=data, file='tmp.csv', delimiter=',')
         self.assertTrue(os.path.isfile('tmp.csv'))
         os.remove('tmp.csv')
 
     def test_write_csv_delim_2(self):
         """write to csv with delim ;"""
-        data = dr.DataReader(format='csv', data=cwd + '/test/data/basic_csv.csv').read(delim=',')
+        data = dr.DataReader(format='csv',
+                             data=cwd + '/test/data/basic_csv.csv')\
+            .read(delim=',')
         dw.write_csv(data=data, file='tmp.csv', delimiter=';')
         self.assertTrue(os.path.isfile('tmp.csv'))
         os.remove('tmp.csv')
@@ -26,21 +30,27 @@ class TestDataWriter(unittest.TestCase):
     # json
     def test_write_json_allow_nan(self):
         """write to json allowing nan"""
-        data = dr.DataReader(format='csv', data=cwd + '/test/data/basic_csv.csv').read(delim=',')
+        data = dr.DataReader(format='csv',
+                             data=cwd + '/test/data/basic_csv.csv')\
+            .read(delim=',')
         dw.write_json(data=data, file='tmp.json', allow_nan=True)
         self.assertTrue(os.path.isfile('tmp.json'))
         os.remove('tmp.json')
 
     def test_write_json_not_allow_nan(self):
         """write to json not allowing nan"""
-        data = dr.DataReader(format='csv', data=cwd + '/test/data/basic_csv.csv').read(delim=',')
+        data = dr.DataReader(format='csv',
+                             data=cwd + '/test/data/basic_csv.csv')\
+            .read(delim=',')
         dw.write_json(data=data, file='tmp.json', allow_nan=False)
         self.assertTrue(os.path.isfile('tmp.json'))
         os.remove('tmp.json')
 
     def test_write_json_indent(self):
         """write to json with indent"""
-        data = dr.DataReader(format='csv', data=cwd + '/test/data/basic_csv.csv').read(delim=',')
+        data = dr.DataReader(format='csv',
+                             data=cwd + '/test/data/basic_csv.csv')\
+            .read(delim=',')
         dw.write_json(data=data, file='tmp.json', allow_nan=True, indent=4)
         self.assertTrue(os.path.isfile('tmp.json'))
         os.remove('tmp.json')
@@ -48,7 +58,9 @@ class TestDataWriter(unittest.TestCase):
     # yaml
     def test_write_yaml(self):
         """write to yaml"""
-        data = dr.DataReader(format='csv', data=cwd + '/test/data/basic_csv.csv').read(delim=',')
+        data = dr.DataReader(format='csv',
+                             data=cwd + '/test/data/basic_csv.csv')\
+            .read(delim=',')
         dw.write_yaml(data=data, file='tmp.yaml')
         self.assertTrue(os.path.isfile('tmp.yaml'))
         os.remove('tmp.yaml')

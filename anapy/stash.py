@@ -60,7 +60,8 @@ class StashTable:
                 dat = ast.literal_eval(base64.decodebytes(f.read()).decode())
                 return dat
         except FileNotFoundError:
-            raise ValueError(f'the column: "{key}" does not exist or has not been stashed')
+            raise ValueError(f'the column: "{key}" '
+                             f'does not exist or has not been stashed')
 
     def __bin_write(self, key, values):
         """ writes to binary in ANApy file structure """
