@@ -7,9 +7,8 @@ with open("requirements.txt", "r") as file_stream:
     install_requires = file_stream.read().splitlines()
 
 classifiers = [
-    "Development Status :: 1 - Planning",
+    "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
-    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
     "Natural Language :: English",
     "Operating System :: OS Independent",
     "Programming Language :: Python",
