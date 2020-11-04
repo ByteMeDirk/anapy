@@ -5,24 +5,6 @@ import os
 import shutil
 
 
-def list_tables():
-    """list current tables in stash"""
-    return os.listdir('stash/')
-
-
-def delete_tables(table):
-    """
-    delete the table within the stash directory
-    :param table: table to delete
-    """
-    try:
-        shutil.rmtree(f'stash/{table}')
-    except FileNotFoundError:
-        raise FileNotFoundError(f'{table} is not a stashed table, '
-                                'stashed tables are: \n'
-                                f'{list_tables()}')
-
-
 class StashTable:
     """
     StashTable is a simplistic data storage solution for
@@ -68,7 +50,7 @@ class StashTable:
             pass
 
     def __bin_read(self, key):
-        """ reads from binary ANApy file structure """
+        """Reads from binary ANApy file structure """
         try:
             with gzip.open(f'{self.cwd}/{self.table}/{key}', 'r') as f:
                 dat = ast.literal_eval(base64.decodebytes(f.read()).decode())
@@ -78,13 +60,13 @@ class StashTable:
                              f'does not exist or has not been stashed')
 
     def __bin_write(self, key, values):
-        """ writes to binary in ANApy file structure """
+        """Writes to binary in ANApy file structure """
         with gzip.open(f'{self.cwd}/{self.table}/{key}', 'wb') as f:
             dat = base64.encodebytes(str(values).encode())
             f.write(dat)
 
     def save(self):
-        """  stash data table to ANApy columnar file structure """
+        """Stash data table to ANApy columnar file structure """
         values = []
         for k in self.keys:
             for i in range(len(self.data)):
@@ -95,7 +77,7 @@ class StashTable:
 
     def col(self, key) -> list:
         """
-        return column from stashed data table
+        Return column from stashed data table
         :param key: str: name of column
         :return: list: column values
         """
@@ -103,7 +85,7 @@ class StashTable:
 
     def row(self, index) -> dict:
         """
-        return row from stashed data table
+        Return row from stashed data table
         :param index: int: index of the row in
         :return: dict: key value pair of row
         """
@@ -116,54 +98,76 @@ class StashTable:
         return __row
 
     def col_names(self):
-        """ returns column naves or keys of table """
+        """Returns column naves or keys of table """
         return self.keys
 
-    def get(self, key, value, operator) -> list:
+    def get(self, key, value, operator, reindex=False) -> list:
         # ToDo: not very efficient, work on something a little faster
         """
-        return all rows where a key.value matches a specific value
+        Return all rows where a key.value matches a specific value
         note that the logical operator is not sensitive to data type and will
         return anything that is true
+        :param reindex: bool: first col as index can be re-indexed
         :param key: str: column name
         :param value: str: value where key.value matches based on operator
         :param operator: str: logical operator [>, <, >=, <=, !=, ==]
         :return: list: list of dictionary containing matching data
         """
-        ops = {
-            '>': lambda a, b: a > b,
-            '<': lambda a, b: a < b,
-            '>=': lambda a, b: a >= b,
-            '<=': lambda a, b: a <= b,
-            '!=': lambda a, b: a != b,
-            '==': lambda a, b: a == b
-        }
-
         search_list, tmp = [], []
         col_data = self.col(key=key)
 
-        try:
-            func = ops[operator]
-        except KeyError:
-            raise ValueError(f'{operator} is not a valid operator')
-
         # get data index where value equals
         for i in range(len(col_data)):
-            if func(col_data[i], value):
-                search_list.append(i)
+            tmp_val = col_data[i]
+            if operator == '==':
+                if tmp_val == value:
+                    search_list.append(i)
+
+            elif operator == '>':
+                if tmp_val > value:
+                    search_list.append(i)
+
+            elif operator == '<':
+                if tmp_val < value:
+                    search_list.append(i)
+
+            elif operator == '>=':
+                if tmp_val >= value:
+                    search_list.append(i)
+
+            elif operator == '<=':
+                if tmp_val <= value:
+                    search_list.append(i)
+
+            elif operator == '!=':
+                if tmp_val != value:
+                    search_list.append(i)
+
+            else:
+                raise ValueError(f'{operator} is not a valid operator')
 
         # return rows of equal data
         for i in search_list:
             tmp.append(self.row(index=i))
 
+        if reindex:
+            return self.re_index(data=tmp)
+
         return tmp
 
+    def re_index(self, data):
+        """Re-indexes data based on the first column as assumed id"""
+        index_range = len(data)
+        for i in range(index_range):
+            data[i][self.keys[0]] = i + 1
+
+        return data
+
     def delete(self):
-        """ delete the table once all work has been completed """
+        """Delete the table once all work has been completed """
         shutil.rmtree(f'stash/{self.table}')
 
     @staticmethod
     def un_stash():
-        """ delete the ANApy stash system """
-        os.rmdir('stash')
+        """Delete the ANApy stash system """
         shutil.rmtree('stash')

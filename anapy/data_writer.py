@@ -5,7 +5,7 @@ import yaml
 
 
 def csv_quote(quoting):
-    """define quoting params for csv writing"""
+    """Define quoting params for csv writing"""
     try:
         if quoting == 'all':
             return csv.QUOTE_ALL
@@ -24,14 +24,14 @@ def csv_quote(quoting):
 
 
 def strip_dict(d):
-    """ cleans up dictionary obtained from a messy file """
+    """Cleans up dictionary obtained from a messy file """
     return {key: strip_dict(value) if isinstance(value, dict)
     else value.strip() for key, value in d.items()}
 
 
 def write_csv(delimiter=',', quoting=None, header=True, **kwargs):
     """
-    write ANApy consumed data to csv file
+    Write ANApy consumed data to csv file
     :param delimiter: str: csv delimiter
     :param quoting: str: quiting level of data [all, minimal, nonumeric] default none
     :param header: bool: header true or false
@@ -52,7 +52,7 @@ def write_csv(delimiter=',', quoting=None, header=True, **kwargs):
 
 def write_json(indent=None, allow_nan=True, sort_keys=True, **kwargs):
     """
-    write ANApy consumed data to json file
+    Write ANApy consumed data to json file
     :param indent: int: json indent level, default is compact
     :param allow_nan: bool: allow nan values to be written
     :param sort_keys: boo: sort keys
@@ -69,7 +69,7 @@ def write_json(indent=None, allow_nan=True, sort_keys=True, **kwargs):
 
 def write_yaml(**kwargs):
     """
-    write ANApy consumed data to yaml file
+    Write ANApy consumed data to yaml file
     :param file: file to write csv to
     :param data: data to consume
     """
