@@ -29,7 +29,7 @@ class DataReader:
 
     def get_extension(self):
         """
-        simple process of getting extension
+        Simple process of getting extension
         from data absolute path string
         if extension is not provided, d_type
         expects a string 'csv', 'json' etc else
@@ -52,7 +52,7 @@ class DataReader:
 
     def parse_csv(self, delim):
         """
-        consumes csv data file and returns dict
+        Consumes csv data file and returns dict
         :param delim: str: delimiter in csv file
         :return: dict object of data
         """
@@ -70,7 +70,7 @@ class DataReader:
 
     def parse_json(self):
         """
-        consumes json data file and returns dict
+        Consumes json data file and returns dict
         :return: dict object of data
         """
         try:
@@ -87,7 +87,7 @@ class DataReader:
 
     def parse_yaml(self):
         """
-        consumes yaml data file and returns dict
+        Consumes yaml data file and returns dict
         :return: dict object of data
         """
         if self.compression == 'gz':
@@ -99,7 +99,7 @@ class DataReader:
 
     def parse_sql(self, sql_create):
         """
-        consumes sql insert file and returns dict
+        Consumes sql insert file and returns dict
         :param sql_create: bool: set if sql file has table create method
         :return: dict object of data
         """
@@ -141,7 +141,7 @@ class DataReader:
 
     def read(self, delim=',', sql_create=False):
         """
-        get data, assumes serialization process
+        Get data, assumes serialization process
         and returns data object
         :param sql_create: str: specified if sql
         is being consumed that is basic insert
