@@ -9,7 +9,7 @@ with open("requirements.txt", "r") as file_stream:
 classifiers = [
     "Development Status :: 1 - Planning",
     "Intended Audience :: Developers",
-    "LICENSE :: OSI APPROVED :: GNU GENERAL PUBLIC LICENSE V3 (GPLV3)",
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
     "Natural Language :: English",
     "Operating System :: OS Independent",
     "Programming Language :: Python",
