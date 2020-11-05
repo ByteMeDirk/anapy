@@ -4,6 +4,8 @@ import gzip
 import os
 import shutil
 
+from anapy import utils
+
 
 class StashTable:
     """
@@ -50,23 +52,21 @@ class StashTable:
             pass
 
     def __bin_read(self, key):
-        """Reads from binary ANApy file structure """
+        """Reads from binary ANApy file structure"""
         try:
-            with gzip.open(f'{self.cwd}/{self.table}/{key}', 'r') as f:
-                dat = ast.literal_eval(base64.decodebytes(f.read()).decode())
-                return dat
+            file = f'{self.cwd}/{self.table}/{key}'
+            return utils.binary_read(file)
         except FileNotFoundError:
             raise ValueError(f'the column: "{key}" '
                              f'does not exist or has not been stashed')
 
     def __bin_write(self, key, values):
-        """Writes to binary in ANApy file structure """
-        with gzip.open(f'{self.cwd}/{self.table}/{key}', 'wb') as f:
-            dat = base64.encodebytes(str(values).encode())
-            f.write(dat)
+        """Writes to binary in ANApy file structure"""
+        file = f'{self.cwd}/{self.table}/{key}'
+        utils.binary_write(file=file, data=values)
 
     def save(self):
-        """Stash data table to ANApy columnar file structure """
+        """Stash data table to ANApy columnar file structure"""
         values = []
         for k in self.keys:
             for i in range(len(self.data)):

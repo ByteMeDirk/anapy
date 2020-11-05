@@ -2,7 +2,7 @@
 
 ----------------------
 
-anapy is the beginning of a simplified universal data manipulation library for handling all forms of data
+ANApy is a universal data manipulation tool for handling all major forms of data on the fly
 
 .. image:: https://img.shields.io/pypi/v/anapy?style=for-the-badge
 .. image:: https://img.shields.io/github/license/dirkscgm/anapy?style=for-the-badge
@@ -23,10 +23,10 @@ ANApy has a basic reader that currently supports csv, json, yaml and sql-inserts
 .. code-block:: python
 
     from anapy import data_reader as dr
-    data = dr.DataReader(data='data.csv', d_type='csv').read(delim=',')
-    data = dr.DataReader(data='data.json', d_type='json')
-    data = dr.DataReader(data='data.yaml', d_type='yaml')
-    data = dr.DataReader(data='data.sql', d_type='sql').read(sql_create=False)
+    data = dr.DataReader(data='data.csv', format='csv').read(delim=',')
+    data = dr.DataReader(data='data.json', format='json')
+    data = dr.DataReader(data='data.yaml', format='yaml')
+    data = dr.DataReader(data='data.sql', format='sql').read(sql_create=False)
 
 Writing Data
 #######################

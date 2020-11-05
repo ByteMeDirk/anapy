@@ -1,3 +1,6 @@
+import ast
+import base64
+import gzip
 import os
 import shutil
 
@@ -22,7 +25,7 @@ def is_integer(x):
 
 def delete_tables(table):
     """
-    Delete the table within the stash directory
+    Delete the table within the ANApy stash directory
     :param table: table to delete
     """
     try:
@@ -31,3 +34,24 @@ def delete_tables(table):
         raise FileNotFoundError(f'{table} is not a stashed table, '
                                 'stashed tables are: \n'
                                 f'{list_tables()}')
+
+
+def binary_read(file):
+    """
+    Reads from gzip compressed file
+    :param file: str: the file to read
+    """
+    with gzip.open(file, 'r') as f:
+        return ast.literal_eval(base64.decodebytes(f.read()).decode())
+
+
+def binary_write(file, data):
+    """
+    Writes to gzip compressed file
+    :param file:
+    :param data:
+    :return:
+    """
+    with gzip.open(file, 'wb') as f:
+        dat = base64.encodebytes(str(data).encode())
+        f.write(dat)

@@ -25,9 +25,8 @@ project_urls = {}
 setuptools.setup(
     author="DirksCGM",
     classifiers=classifiers,
-    description="ANApy is the beginning of a simplified universal "
-                "data manipulation library for handling all forms "
-                "of data",
+    description="ANApy is a universal data manipulation tool "
+                "for handling all major forms of data on the fly",
     install_requires=install_requires,
     license="GNU",
     long_description=readme,

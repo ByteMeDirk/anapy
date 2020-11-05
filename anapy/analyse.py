@@ -1,10 +1,7 @@
-import ast
-import base64
-import gzip
 import os
 import statistics
 
-from anapy.utils import is_integer
+from anapy.utils import is_integer, binary_read
 
 
 class Analyse:
@@ -42,18 +39,14 @@ class Analyse:
     def __bin_read(self, key):
         """Reads from binary ANApy file structure """
         try:
-            with gzip.open(f'{self.cwd}/{self.table}/{key}', 'r') as f:
-                dat = ast.literal_eval(base64.decodebytes(f.read()).decode())
-                return dat
+            return binary_read(file=f'{self.cwd}/{self.table}/{key}')
         except FileNotFoundError:
             raise ValueError(f'the column: "{key}" '
                              f'does not exist or has not been stashed')
 
     def max(self, col):
         """Returns max in column"""
-        col = self.__index_to_col(col)
-        data = self.__bin_read(key=col)
-
+        data = self.__bin_read(key=self.__index_to_col(col))
         try:
             return int(max(data))
         except ValueError:
@@ -61,8 +54,7 @@ class Analyse:
 
     def min(self, col):
         """Returns min in column"""
-        col = self.__index_to_col(col)
-        data = self.__bin_read(key=col)
+        data = self.__bin_read(key=self.__index_to_col(col))
         try:
             return int(min(data))
         except ValueError:
@@ -70,16 +62,12 @@ class Analyse:
 
     def mean(self, col):
         """Returns mean in column"""
-        col = self.__index_to_col(col)
-        data = self.__bin_read(key=col)
-
+        data = self.__bin_read(key=self.__index_to_col(col))
         return int(statistics.mean(list(map(int, data))))
 
     def median(self, col):
         """Returns median in column"""
-        col = self.__index_to_col(col)
-        data = self.__bin_read(key=col)
-
+        data = self.__bin_read(key=self.__index_to_col(col))
         try:
             return statistics.median(list(map(int, data)))
         except TypeError:
@@ -87,9 +75,7 @@ class Analyse:
 
     def mode(self, col):
         """Returns mode in column"""
-        col = self.__index_to_col(col)
-        data = self.__bin_read(key=col)
-
+        data = self.__bin_read(key=self.__index_to_col(col))
         try:
             return int(statistics.mode(data))
         except ValueError:
