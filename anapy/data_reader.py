@@ -16,15 +16,15 @@ class DataReader:
     that come with python 3.7 >
     """
 
-    def __init__(self, data, format=None, **kwargs):
+    def __init__(self, data, f_format=None, **kwargs):
         """
         :param data: path to data
-        :param format: extension of data NOTE: gzipped
+        :param f_format: extension of data NOTE: gzipped
         files should not have their inherent format suggested
         :param kwargs:
         """
         self.data = os.path.abspath(data)
-        self.format = format
+        self.format = f_format
         self.compression = None
 
     def get_extension(self):
@@ -58,9 +58,9 @@ class DataReader:
         """
         if self.compression == 'gz':
             with gzip.open(self.data, 'rt') as gf:
-                return [row for row in csv.DictReader(gf,
-                                                      delimiter=delim,
-                                                      skipinitialspace=True)]
+                return [*csv.DictReader(gf,
+                                        delimiter=delim,
+                                        skipinitialspace=True)]
 
         with open(self.data) as f:
             return [{k: v for k, v in row.items()} for row in
@@ -105,7 +105,7 @@ class DataReader:
         """
         if self.compression == 'gz':
             with gzip.open(self.data, 'rt') as gf:
-                data, head, body, count = [], [], [], 0
+                data, head, body, = [], [], []
                 for statement in gf:
                     data.append(re.findall(r'\((.*?)\)', statement))
         else:

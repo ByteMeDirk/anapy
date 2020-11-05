@@ -25,8 +25,8 @@ def csv_quote(quoting):
 
 def strip_dict(d):
     """Cleans up dictionary obtained from a messy file """
-    return {key: strip_dict(value) if isinstance(value, dict)
-    else value.strip() for key, value in d.items()}
+    return {key: strip_dict(value) if isinstance(value, dict) else value.strip()
+            for key, value in d.items()}
 
 
 def write_csv(delimiter=',', quoting=None, header=True, **kwargs):
@@ -39,8 +39,9 @@ def write_csv(delimiter=',', quoting=None, header=True, **kwargs):
     :param data: data to consume
     """
     with open(kwargs['file'], 'w') as f:
+        print(kwargs['data'])
         writer = csv.DictWriter(f,
-                                fieldnames=[i for i in kwargs['data'][0]],
+                                fieldnames=[*kwargs['data'][0]],
                                 delimiter=delimiter,
                                 quoting=csv_quote(quoting))
         if header:

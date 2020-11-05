@@ -39,7 +39,7 @@ class StashTable:
     def __init__(self, **kwargs):
         self.data = kwargs['data']
         self.table = kwargs['table']
-        self.keys = list(k for k in self.data[0].keys())
+        self.keys = [*self.data[0].keys()]
 
         self.cwd = os.getcwd() + '/stash/'
 
@@ -64,7 +64,7 @@ class StashTable:
 
     def save(self):
         """Stash data table to ANApy columnar file structure"""
-        values, meta, data_list = [], {}, []
+        values = []
         for k in self.keys:
             for i in range(len(self.data)):
                 values.append(f'{self.data[i][k]}')
