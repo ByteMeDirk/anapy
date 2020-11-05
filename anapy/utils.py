@@ -25,14 +25,14 @@ def is_integer(x):
 
 def get_type(x):
     """Consumes a value and determines its inherent data type"""
-    if isinstance(x, int):
+    if isinstance(x, bool):
+        return bool
+
+    if is_integer(x):
         return int
 
     if isinstance(x, float):
         return float
-
-    if isinstance(x, bool):
-        return bool
 
     if isinstance(x, complex):
         return complex
