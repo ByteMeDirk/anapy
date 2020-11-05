@@ -23,6 +23,46 @@ def is_integer(x):
         return False
 
 
+def get_type(x):
+    """Consumes a value and determines its inherent data type"""
+    if isinstance(x, int):
+        return int
+
+    if isinstance(x, float):
+        return float
+
+    if isinstance(x, bool):
+        return bool
+
+    if isinstance(x, complex):
+        return complex
+
+    if isinstance(x, bytes):
+        return bytes
+
+    return str
+
+
+def list_type(lst, validate=False):
+    """
+    Simple list type test that returns the most
+    common data type in a list or validates the
+    types within a list
+    :param lst: list: list of values to test
+    :param validate: set validator which will raise an error
+    :return: data type class
+    """
+    type_list = []
+    for i in lst:
+        type_list.append(get_type(i))
+
+    if validate and len(set(type_list)) > 1:
+        return ValueError('list contains multiple types '
+                          'and can not infer a single type \n'
+                          f'current data types: {set(type_list)}')
+    return max(type_list, key=type_list.count)
+
+
 def delete_tables(table):
     """
     Delete the table within the ANApy stash directory

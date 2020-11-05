@@ -1,6 +1,3 @@
-import ast
-import base64
-import gzip
 import os
 import shutil
 
@@ -67,7 +64,7 @@ class StashTable:
 
     def save(self):
         """Stash data table to ANApy columnar file structure"""
-        values = []
+        values, meta, data_list = [], {}, []
         for k in self.keys:
             for i in range(len(self.data)):
                 values.append(f'{self.data[i][k]}')

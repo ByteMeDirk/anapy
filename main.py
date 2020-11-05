@@ -27,17 +27,18 @@ def standard_stash():
 def analyse_stash():
     """example of using analysis on stashed table"""
 
-    data = dr.DataReader(data='test/data/json_array.json.gz', format='json.gz').read()
+    data = dr.DataReader(data='test/data/json_array.json.gz').read()
+
     table = StashTable(data=data, table='basic')
     table.save()
 
     table_ana = Analyse(table='basic')  # stashed table name needs to be specified
 
-    print(table_ana.max(col='id'))
-    print(table_ana.min(col='id'))
-    print(table_ana.mean(col='id'))
-    print(table_ana.mode(col='id'))
-    print(table_ana.median(col='id'))
+    # print(table_ana.max(col='id'))
+    # print(table_ana.min(col='id'))
+    # print(table_ana.mean(col='id'))
+    # print(table_ana.mode(col='id'))
+    # print(table_ana.median(col='id'))
 
     table.un_stash()
 
