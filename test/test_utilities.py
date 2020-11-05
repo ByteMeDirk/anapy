@@ -14,7 +14,7 @@ class TestStash(unittest.TestCase):
     def get_data():
         """get mock data for stash"""
         _dir = cwd + '/test/data/basic_csv.csv'
-        return dr.DataReader(format='csv',
+        return dr.DataReader(f_format='csv',
                              data=_dir).read(delim=',')
 
     def test_list_tables(self):
@@ -53,14 +53,3 @@ class TestStash(unittest.TestCase):
         """Tests the list type for bool util method"""
         self.assertEqual(utils.list_type([True, True, False, False]), bool)
 
-    def test_delete_tables(self):
-        """Already tested in stash"""
-        pass
-
-    def test_binary_read(self):
-        """Already tested in data reader"""
-        pass
-
-    def test_binary_write(self):
-        """Already tested in data writer"""
-        pass

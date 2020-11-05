@@ -12,13 +12,13 @@ class TestAnalyze(unittest.TestCase):
 
     @staticmethod
     def get_data():
-        """get mock data for stash"""
+        """Get mock data for stash"""
         _dir = cwd + '/test/data/basic_csv.csv'
-        return dr.DataReader(format='csv',
+        return dr.DataReader(f_format='csv',
                              data=_dir).read(delim=',')
 
     def test_max(self):
-        """test min returns highest val in id"""
+        """Test min returns highest val in id"""
         data = self.get_data()
         table = st.StashTable(data=data, table='basic')
         table.save()
@@ -30,7 +30,7 @@ class TestAnalyze(unittest.TestCase):
         table.delete()
 
     def test_min(self):
-        """test min returns lowest val in id"""
+        """Test min returns lowest val in id"""
         data = self.get_data()
         table = st.StashTable(data=data, table='basic')
         table.save()
@@ -42,7 +42,7 @@ class TestAnalyze(unittest.TestCase):
         table.delete()
 
     def test_mean(self):
-        """test min returns highest val in id"""
+        """Test min returns highest val in id"""
         data = self.get_data()
         table = st.StashTable(data=data, table='basic')
         table.save()
@@ -54,7 +54,7 @@ class TestAnalyze(unittest.TestCase):
         table.delete()
 
     def test_mode(self):
-        """test min returns highest val in id"""
+        """Test min returns highest val in id"""
         data = self.get_data()
         table = st.StashTable(data=data, table='basic')
         table.save()
@@ -66,7 +66,7 @@ class TestAnalyze(unittest.TestCase):
         table.delete()
 
     def test_median(self):
-        """test min returns highest val in id"""
+        """Test min returns highest val in id"""
         data = self.get_data()
         table = st.StashTable(data=data, table='basic')
         table.save()
