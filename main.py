@@ -1,6 +1,5 @@
 import anapy.data_reader as dr
 import anapy.data_writer as dw
-import anapy.stash as st
 from anapy.analyse import Analyse
 from anapy.stash import StashTable
 
@@ -8,7 +7,7 @@ from anapy.stash import StashTable
 def standard_stash():
     """example of a normal data read, stash and write"""
 
-    data = dr.DataReader(data='test/data/json_array.json.gz', format='json.gz').read()
+    data = dr.DataReader(data='test/data/json_array.json.gz', f_format='json.gz').read()
     dw.write_csv(data=data, file='main.csv')
 
     table = StashTable(data=data, table='basic')
@@ -41,6 +40,12 @@ def analyse_stash():
     # print(table_ana.median(col='id'))
 
     table.un_stash()
+
+
+def read_write():
+    """normal read and write"""
+    data = dr.DataReader(data='test/data/basic_csv.csv.gz').read()
+    dw.write_csv(data=data, file='test.csv', threads=10)
 
 
 if __name__ == '__main__':

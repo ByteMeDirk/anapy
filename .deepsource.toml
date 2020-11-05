@@ -1,5 +1,7 @@
 version = 1
 
+exclude_patterns = ["main.py"]
+
 [[analyzers]]
 name = "python"
 enabled = true
