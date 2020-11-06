@@ -52,4 +52,3 @@ class TestStash(unittest.TestCase):
     def test_list_type_bool(self):
         """Tests the list type for bool util method"""
         self.assertEqual(utils.list_type([True, True, False, False]), bool)
-
