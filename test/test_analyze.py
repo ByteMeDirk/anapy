@@ -9,6 +9,7 @@ cwd = os.getcwd()
 
 
 class TestAnalyze(unittest.TestCase):
+    """Test anapy.analyse"""
 
     @staticmethod
     def get_data():

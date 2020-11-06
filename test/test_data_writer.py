@@ -8,6 +8,7 @@ cwd = os.getcwd()
 
 
 class TestDataWriter(unittest.TestCase):
+    """Test anapy.data_writer"""
 
     # csv
     def test_write_csv_delim_1(self):

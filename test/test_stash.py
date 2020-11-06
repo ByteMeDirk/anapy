@@ -8,6 +8,7 @@ cwd = os.getcwd()
 
 
 class TestStash(unittest.TestCase):
+    """Test anapy.stash"""
 
     @staticmethod
     def get_data():

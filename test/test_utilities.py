@@ -12,7 +12,7 @@ class TestStash(unittest.TestCase):
 
     @staticmethod
     def get_data():
-        """get mock data for stash"""
+        """Get mock data for stash"""
         _dir = cwd + '/test/data/basic_csv.csv'
         return dr.DataReader(f_format='csv',
                              data=_dir).read(delim=',')
@@ -52,4 +52,3 @@ class TestStash(unittest.TestCase):
     def test_list_type_bool(self):
         """Tests the list type for bool util method"""
         self.assertEqual(utils.list_type([True, True, False, False]), bool)
-

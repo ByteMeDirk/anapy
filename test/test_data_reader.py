@@ -19,6 +19,7 @@ data_paths = {
 
 
 class TestDataReader(unittest.TestCase):
+    """Test anapy.data_reader"""
 
     # Uncompressed Data Read
     # csv
