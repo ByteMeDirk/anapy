@@ -30,10 +30,6 @@ class TestCoreUseCase(unittest.TestCase):
             table = st.StashTable(data=data, table='data')
             table.save()
 
-            col_names = table.col_names()
-            first_row = table.row(index=0)
-            first_col = table.col(key='id')
-
             subset = table.get(key='gender', value='Female', operator='==', reindex=True)
 
             dw.write_csv(data=subset, file='subset.csv', header=True)
@@ -58,10 +54,6 @@ class TestCoreUseCase(unittest.TestCase):
             table = st.StashTable(data=data, table='data')
             table.save()
 
-            col_names = table.col_names()
-            first_row = table.row(index=0)
-            first_col = table.col(key='id')
-
             subset = table.get(key='gender', value='Female', operator='==', reindex=True)
 
             dw.write_json(data=subset, file='subset.json', allow_nan=False, sort_keys=False)
@@ -84,10 +76,6 @@ class TestCoreUseCase(unittest.TestCase):
             table = st.StashTable(data=data, table='data')
             table.save()
 
-            col_names = table.col_names()
-            first_row = table.row(index=0)
-            first_col = table.col(key='id')
-
             subset = table.get(key='gender', value='Female', operator='==', reindex=True)
 
             dw.write_yaml(data=subset, file='subset.yaml')
@@ -108,10 +96,6 @@ class TestCoreUseCase(unittest.TestCase):
             data = dr.DataReader(data=data_paths['json_arr'], f_format='json').read()
             table = st.StashTable(data=data, table='data')
             table.save()
-
-            col_names = table.col_names()
-            first_row = table.row(index=0)
-            first_col = table.col(key='id')
 
             subset = table.get(key='gender', value='Female', operator='==', reindex=True)
 
@@ -137,10 +121,6 @@ class TestCoreUseCase(unittest.TestCase):
             table = st.StashTable(data=data, table='data')
             table.save()
 
-            col_names = table.col_names()
-            first_row = table.row(index=0)
-            first_col = table.col(key='id')
-
             subset = table.get(key='gender', value='Female', operator='==', reindex=True)
 
             dw.write_json(data=subset, file='subset.json', allow_nan=False, sort_keys=False)
@@ -163,10 +143,6 @@ class TestCoreUseCase(unittest.TestCase):
             table = st.StashTable(data=data, table='data')
             table.save()
 
-            col_names = table.col_names()
-            first_row = table.row(index=0)
-            first_col = table.col(key='id')
-
             subset = table.get(key='gender', value='Female', operator='==', reindex=True)
 
             dw.write_yaml(data=subset, file='subset.yaml')
@@ -187,10 +163,6 @@ class TestCoreUseCase(unittest.TestCase):
             data = dr.DataReader(data=data_paths['yaml'], f_format='yaml').read()
             table = st.StashTable(data=data, table='data')
             table.save()
-
-            col_names = table.col_names()
-            first_row = table.row(index=0)
-            first_col = table.col(key='id')
 
             subset = table.get(key='gender', value='Female', operator='==', reindex=True)
 
@@ -216,10 +188,6 @@ class TestCoreUseCase(unittest.TestCase):
             table = st.StashTable(data=data, table='data')
             table.save()
 
-            col_names = table.col_names()
-            first_row = table.row(index=0)
-            first_col = table.col(key='id')
-
             subset = table.get(key='gender', value='Female', operator='==', reindex=True)
 
             dw.write_json(data=subset, file='subset.json', allow_nan=False, sort_keys=False)
@@ -242,10 +210,6 @@ class TestCoreUseCase(unittest.TestCase):
             table = st.StashTable(data=data, table='data')
             table.save()
 
-            col_names = table.col_names()
-            first_row = table.row(index=0)
-            first_col = table.col(key='id')
-
             subset = table.get(key='gender', value='Female', operator='==', reindex=True)
 
             dw.write_yaml(data=subset, file='subset.yaml')
@@ -266,10 +230,6 @@ class TestCoreUseCase(unittest.TestCase):
             data = dr.DataReader(data=data_paths['sql'], f_format='sql').read()
             table = st.StashTable(data=data, table='data')
             table.save()
-
-            col_names = table.col_names()
-            first_row = table.row(index=0)
-            first_col = table.col(key='id')
 
             subset = table.get(key='gender', value='Female', operator='==', reindex=True)
 
@@ -295,10 +255,6 @@ class TestCoreUseCase(unittest.TestCase):
             table = st.StashTable(data=data, table='data')
             table.save()
 
-            col_names = table.col_names()
-            first_row = table.row(index=0)
-            first_col = table.col(key='id')
-
             subset = table.get(key='gender', value='Female', operator='==', reindex=True)
 
             dw.write_json(data=subset, file='subset.json', allow_nan=False, sort_keys=False)
@@ -320,10 +276,6 @@ class TestCoreUseCase(unittest.TestCase):
             data = dr.DataReader(data=data_paths['sql'], f_format='sql').read()
             table = st.StashTable(data=data, table='data')
             table.save()
-
-            col_names = table.col_names()
-            first_row = table.row(index=0)
-            first_col = table.col(key='id')
 
             subset = table.get(key='gender', value='Female', operator='==', reindex=True)
 
