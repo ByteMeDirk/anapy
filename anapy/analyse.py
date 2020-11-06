@@ -10,6 +10,10 @@ class Analyse:
     to help draw quick conclusions on stashed data for
     on-the-fly columnar level operations when manipulating data.
 
+    ANApy Analyse allows developers to bring down data and
+    distributed out based on defined criterion to multiple
+    formats.
+
     data = dr.DataReader(data='data.json', format='json.gz').read()
     table = StashTable(data=data, table='data')
     table.save()

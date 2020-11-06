@@ -21,6 +21,8 @@ data_paths = {
 
 
 class TestCoreUseCase(unittest.TestCase):
+    """Test anapy.*"""
+
     def test_use_case_csv_csv(self):
         """Simple use case using core tools for reading,
         computing and writing"""
