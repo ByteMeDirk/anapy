@@ -37,6 +37,10 @@ class StashTable:
     """
 
     def __init__(self, **kwargs):
+        """
+        :param data: data to be consumed and stashed
+        :param table: name of the stashed table
+        """
         self.data = kwargs['data']
         self.table = kwargs['table']
         self.keys = [*self.data[0].keys()]
