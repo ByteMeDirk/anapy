@@ -1,4 +1,4 @@
-.. image:: static/logo.png
+.. image:: static/anapy_logo.png
 
 ----------------------
 
