@@ -39,7 +39,6 @@ def write_csv(delimiter=',', quoting=None, header=True, **kwargs):
     :param data: data to consume
     """
     with open(kwargs['file'], 'w') as f:
-        print(kwargs['data'])
         writer = csv.DictWriter(f,
                                 fieldnames=[*kwargs['data'][0]],
                                 delimiter=delimiter,

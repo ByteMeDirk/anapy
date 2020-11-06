@@ -110,7 +110,7 @@ class DataReader:
                     data.append(re.findall(r'\((.*?)\)', statement))
         else:
             with open(self.data) as f:
-                data, head, body, count = [], [], [], 0
+                data, head, body = [], [], []
                 for statement in f:
                     data.append(re.findall(r'\((.*?)\)', statement))
 
